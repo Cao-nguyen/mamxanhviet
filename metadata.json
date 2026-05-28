@@ -1,0 +1,6 @@
+{
+  "name": "Mầm Xanh Việt Landing Page",
+  "description": "Trang đích giới thiệu chuyên trang Mầm Xanh Việt",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
