@@ -20,7 +20,8 @@ import {
   Coffee,
   Video,
   HeartHandshake,
-  Map
+  Map,
+  PlayCircle
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -172,6 +173,49 @@ export default function App() {
     }
   ];
 
+  const courseLessons = [
+    { session: "Buổi 1", title: "Các biện pháp tu từ thường gặp", date: "25/06/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 2", title: "Các câu thường được sử dụng trong văn bản", date: "26/06/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 3", title: "Các thể loại thường gặp trong văn bản đọc hiểu", date: "27/06/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 4", title: "Các phương thức biểu đạt", date: "28/06/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 5", title: "Thể thơ", date: "29/06/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 6", title: "Giải đề đọc hiểu - Đề số 1", date: "30/06/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 7", title: "Giải đề đọc hiểu - Đề số 2", date: "01/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 8", title: "Giải đề đọc hiểu - Đề số 3", date: "02/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 9", title: "Nghị luận xã hội về một vấn đề hiện tượng, đời sống", date: "03/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 10", title: "Nghị luận xã hội về tư tưởng, đạo lý", date: "04/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 11", title: "Nghị luận xã hội về một vấn đề trong TPVH, TPNT", date: "05/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 12", title: "Nghị luận văn học phân tích, đánh giá một tác phẩm văn xuôi", date: "06/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 13", title: "Nghị luận văn học phân tích, đánh giá một tác phẩm thơ", date: "07/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 14", title: "Nghị luận văn học phân tích, đánh giá hai tác phẩm thơ hoặc văn xuôi", date: "08/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 15", title: "Mở rộng vốn từ, học cách diễn đạt", date: "09/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 16", title: "Dẫn chứng tiêu biểu phần 1", date: "10/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 17", title: "Dẫn chứng tiêu biểu phần 2", date: "11/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 18", title: "Dẫn chứng tiêu biểu phần 3", date: "12/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 19", title: "Văn học dân gian Việt Nam", date: "13/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 20", title: "Giai đoạn Văn học Trung đại Việt Nam", date: "14/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 21", title: "Giai đoạn Văn học Hiện đại Việt Nam", date: "15/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 22", title: "Đồng Chí - Chính Hữu", date: "16/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 23", title: "Bài thơ về tiểu đội xe không kính - Phạm Tiến Duật", date: "17/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 24", title: "Tây Tiến - Quang Dũng", date: "18/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 25", title: "Chí Phèo - Nam Cao", date: "19/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 26", title: "Hai đứa trẻ - Thạch Lam", date: "20/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 27", title: "Từ ấy - Tố Hữu", date: "21/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 28", title: "Truyện Kiều - Nguyễn Du", date: "22/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 29", title: "Nguyễn Trãi", date: "23/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 30", title: "Hồ Xuân Hương", date: "24/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 31", title: "Nguyễn Khuyến", date: "25/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 32", title: "Ngô Tất Tố", date: "26/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 33", title: "Hồ Chí Minh", date: "27/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 34", title: "Nguyễn Minh Châu", date: "28/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 35", title: "Chế Lan Viên", date: "29/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 36", title: "Nguyễn Ngọc Tư", date: "30/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 37", title: "Nguyễn Nhật Ánh", date: "31/07/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 38", title: "Giải đề và Đánh giá - Đề số 1", date: "01/08/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 39", title: "Giải đề và Đánh giá - Đề số 2", date: "02/08/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 40", title: "Giải đề và Đánh giá - Đề số 3", date: "03/08/2026", status: "Chưa mở", link: "#" }
+  ];
+
   return (
     <div className="min-h-screen font-sans text-slate-800 selection:bg-emerald-200 selection:text-emerald-900 overflow-hidden relative">
       <AmbientBackground />
@@ -275,6 +319,111 @@ export default function App() {
             >
               Liên hệ
             </motion.a>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Course Section */}
+      <section className="py-24 px-6 lg:px-12 max-w-7xl mx-auto relative z-10">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="w-full"
+        >
+          <div className="text-center mb-16">
+            <motion.span variants={fadeUp} className="text-emerald-600 font-semibold tracking-widest uppercase text-sm mb-4 block">Khoá Học Bồi Dưỡng</motion.span>
+            <motion.h2 variants={fadeUp} className="font-display text-4xl leading-tight font-bold text-slate-900 tracking-tight">
+              KHOÁ HỌC 7+ NGỮ VĂN KHÔNG KHÓ
+            </motion.h2>
+          </div>
+
+          <motion.div variants={fadeUp} className="glass-panel overflow-hidden rounded-[2rem] shadow-sm border border-slate-200/50">
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[800px]">
+                <thead>
+                  <tr className="border-b border-slate-200/50 bg-slate-50/50">
+                    <th className="py-5 px-6 font-semibold text-slate-700 w-24">Buổi học</th>
+                    <th className="py-5 px-6 font-semibold text-slate-700">Tên bài học</th>
+                    <th className="py-5 px-6 font-semibold text-slate-700 w-40">Thời gian đăng</th>
+                    <th className="py-5 px-6 font-semibold text-slate-700 w-36">Trạng Thái</th>
+                    <th className="py-5 px-6 font-semibold text-slate-700 w-32 text-center">Link học</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200/50">
+                  {courseLessons.map((lesson, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50/30 transition-colors">
+                      <td className="py-4 px-6 font-medium text-emerald-700">{lesson.session}</td>
+                      <td className="py-4 px-6 text-slate-800 font-medium">{lesson.title}</td>
+                      <td className="py-4 px-6 text-slate-500 font-mono text-sm">{lesson.date}</td>
+                      <td className="py-4 px-6">
+                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium border ${
+                          lesson.status === 'Đã mở' 
+                            ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                            : lesson.status === 'Sắp diễn ra'
+                            ? 'bg-amber-50 border-amber-200 text-amber-700'
+                            : 'bg-slate-50 border-slate-200 text-slate-500'
+                        }`}>
+                          {lesson.status}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6 text-center">
+                        <a 
+                          href={lesson.link}
+                          className={`inline-flex p-2 rounded-full transition-colors ${
+                            lesson.status === 'Đã mở'
+                            ? 'bg-emerald-100 text-emerald-600 hover:bg-emerald-200 hover:text-emerald-700'
+                            : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                          }`}
+                          onClick={(e) => lesson.status !== 'Đã mở' && e.preventDefault()}
+                        >
+                          <PlayCircle className="w-5 h-5" />
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden flex flex-col p-4 sm:p-6 gap-4">
+              {courseLessons.map((lesson, idx) => (
+                <div key={idx} className="bg-white/50 backdrop-blur-sm border border-slate-200/50 p-4 rounded-2xl flex flex-col gap-3 shadow-sm">
+                  <div className="flex justify-between items-start gap-3">
+                    <div>
+                      <div className="text-emerald-700 font-medium text-sm mb-1">{lesson.session}</div>
+                      <h3 className="text-slate-800 font-medium text-base leading-snug">{lesson.title}</h3>
+                    </div>
+                    <a 
+                      href={lesson.link}
+                      className={`shrink-0 inline-flex p-2 rounded-full transition-colors ${
+                        lesson.status === 'Đã mở'
+                        ? 'bg-emerald-100 text-emerald-600 hover:bg-emerald-200 hover:text-emerald-700'
+                        : 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                      }`}
+                      onClick={(e) => lesson.status !== 'Đã mở' && e.preventDefault()}
+                    >
+                      <PlayCircle className="w-5 h-5" />
+                    </a>
+                  </div>
+                  <div className="flex justify-between items-center mt-1 border-t border-slate-200/50 pt-3">
+                    <span className="text-slate-500 font-mono text-xs">{lesson.date}</span>
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium border uppercase tracking-wide ${
+                      lesson.status === 'Đã mở' 
+                        ? 'bg-emerald-50 border-emerald-200 text-emerald-700'
+                        : lesson.status === 'Sắp diễn ra'
+                        ? 'bg-amber-50 border-amber-200 text-amber-700'
+                        : 'bg-slate-50 border-slate-200 text-slate-500'
+                    }`}>
+                      {lesson.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </motion.div>
         </motion.div>
       </section>
