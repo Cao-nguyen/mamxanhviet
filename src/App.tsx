@@ -21,7 +21,8 @@ import {
   Video,
   HeartHandshake,
   Map,
-  PlayCircle
+  PlayCircle,
+  X
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -78,6 +79,17 @@ const AmbientBackground = () => (
 
 export default function App() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+
+  const getEmbedUrl = (url: string) => {
+    if (!url || url === '#') return '';
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11)
+      ? `https://www.youtube.com/embed/${match[2]}?autoplay=1`
+      : '';
+  };
+
   const { scrollYProgress } = useScroll();
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 400]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
@@ -174,11 +186,11 @@ export default function App() {
   ];
 
   const courseLessons = [
-    { session: "Buổi 1", title: "Các biện pháp tu từ thường gặp", date: "25/06/2026", status: "Chưa mở", link: "#" },
-    { session: "Buổi 2", title: "Các câu thường được sử dụng trong văn bản", date: "26/06/2026", status: "Chưa mở", link: "#" },
-    { session: "Buổi 3", title: "Các thể loại thường gặp trong văn bản đọc hiểu", date: "27/06/2026", status: "Chưa mở", link: "#" },
-    { session: "Buổi 4", title: "Các phương thức biểu đạt", date: "28/06/2026", status: "Chưa mở", link: "#" },
-    { session: "Buổi 5", title: "Thể thơ", date: "29/06/2026", status: "Chưa mở", link: "#" },
+    { session: "Buổi 1", title: "Các biện pháp tu từ thường gặp", date: "25/06/2026", status: "Đã mở", link: "https://youtu.be/c_o9w_c6rbA" },
+    { session: "Buổi 2", title: "Các câu thường được sử dụng trong văn bản", date: "26/06/2026", status: "Đã mở", link: "https://youtu.be/g5yLXOLScVo" },
+    { session: "Buổi 3", title: "Các thể loại thường gặp trong văn bản đọc hiểu", date: "27/06/2026", status: "Đã mở", link: "https://youtu.be/Y6cEbRZh1OA" },
+    { session: "Buổi 4", title: "Các phương thức biểu đạt", date: "28/06/2026", status: "Đã mở", link: "https://youtu.be/8YIziL7kXn4" },
+    { session: "Buổi 5", title: "Thể thơ", date: "29/06/2026", status: "Đã mở", link: "https://youtu.be/0kxD35-BGAw" },
     { session: "Buổi 6", title: "Giải đề đọc hiểu - Đề số 1", date: "30/06/2026", status: "Chưa mở", link: "#" },
     { session: "Buổi 7", title: "Giải đề đọc hiểu - Đề số 2", date: "01/07/2026", status: "Chưa mở", link: "#" },
     { session: "Buổi 8", title: "Giải đề đọc hiểu - Đề số 3", date: "02/07/2026", status: "Chưa mở", link: "#" },
@@ -342,9 +354,10 @@ export default function App() {
           <motion.div variants={fadeUp} className="glass-panel overflow-hidden rounded-[2rem] shadow-sm border border-slate-200/50">
             {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
-              <table className="w-full text-left border-collapse min-w-[800px]">
+              <table className="w-full text-left border-collapse min-w-[900px]">
                 <thead>
                   <tr className="border-b border-slate-200/50 bg-slate-50/50">
+                    <th className="py-5 px-6 font-semibold text-slate-700 w-24">ID</th>
                     <th className="py-5 px-6 font-semibold text-slate-700 w-24">Buổi học</th>
                     <th className="py-5 px-6 font-semibold text-slate-700">Tên bài học</th>
                     <th className="py-5 px-6 font-semibold text-slate-700 w-40">Thời gian đăng</th>
@@ -355,6 +368,7 @@ export default function App() {
                 <tbody className="divide-y divide-slate-200/50">
                   {courseLessons.map((lesson, idx) => (
                     <tr key={idx} className="hover:bg-slate-50/30 transition-colors">
+                      <td className="py-4 px-6 text-slate-500 font-mono text-sm">#{String(172815 + idx).padStart(8, '0')}</td>
                       <td className="py-4 px-6 font-medium text-emerald-700">{lesson.session}</td>
                       <td className="py-4 px-6 text-slate-800 font-medium">{lesson.title}</td>
                       <td className="py-4 px-6 text-slate-500 font-mono text-sm">{lesson.date}</td>
@@ -377,7 +391,12 @@ export default function App() {
                             ? 'bg-emerald-100 text-emerald-600 hover:bg-emerald-200 hover:text-emerald-700'
                             : 'bg-slate-100 text-slate-400 cursor-not-allowed'
                           }`}
-                          onClick={(e) => lesson.status !== 'Đã mở' && e.preventDefault()}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            if (lesson.status === 'Đã mở' && lesson.link !== '#') {
+                              setActiveVideo(lesson.link);
+                            }
+                          }}
                         >
                           <PlayCircle className="w-5 h-5" />
                         </a>
@@ -394,7 +413,9 @@ export default function App() {
                 <div key={idx} className="bg-white/50 backdrop-blur-sm border border-slate-200/50 p-4 rounded-2xl flex flex-col gap-3 shadow-sm">
                   <div className="flex justify-between items-start gap-3">
                     <div>
-                      <div className="text-emerald-700 font-medium text-sm mb-1">{lesson.session}</div>
+                      <div className="text-emerald-700 font-medium text-sm mb-1">
+                        {lesson.session} <span className="text-slate-400 font-mono font-normal ml-1">#{String(172815 + idx).padStart(8, '0')}</span>
+                      </div>
                       <h3 className="text-slate-800 font-medium text-base leading-snug">{lesson.title}</h3>
                     </div>
                     <a 
@@ -404,7 +425,12 @@ export default function App() {
                         ? 'bg-emerald-100 text-emerald-600 hover:bg-emerald-200 hover:text-emerald-700'
                         : 'bg-slate-100 text-slate-400 cursor-not-allowed'
                       }`}
-                      onClick={(e) => lesson.status !== 'Đã mở' && e.preventDefault()}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        if (lesson.status === 'Đã mở' && lesson.link !== '#') {
+                          setActiveVideo(lesson.link);
+                        }
+                      }}
                     >
                       <PlayCircle className="w-5 h-5" />
                     </a>
@@ -566,6 +592,40 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {activeVideo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm"
+            onClick={() => setActiveVideo(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-4xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl"
+            >
+              <button
+                onClick={() => setActiveVideo(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/80 text-white rounded-full backdrop-blur-md transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              <iframe
+                src={getEmbedUrl(activeVideo)}
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
